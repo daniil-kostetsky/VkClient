@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.myeducationproject.vkclient.ui.theme.NewsMainScreen
 import com.myeducationproject.vkclient.ui.theme.PostCard
 import com.myeducationproject.vkclient.ui.theme.VkClientTheme
 
@@ -30,7 +31,10 @@ class MainActivity : ComponentActivity() {
                         .padding(8.dp)
                 ) {
                     PostCard()
+
                 }
+                NewsMainScreen()
+
             }
         }
     }
