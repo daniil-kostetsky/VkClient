@@ -24,15 +24,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             VkClientTheme {
                 // A surface container using the 'background' color from the theme
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colors.background)
-                        .padding(8.dp)
-                ) {
-                    PostCard()
-
-                }
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .background(MaterialTheme.colors.background)
+//                        .padding(8.dp)
+//                ) {
+//                    PostCard()
+//
+//                }
                 NewsMainScreen()
 
             }
