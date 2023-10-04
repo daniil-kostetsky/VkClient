@@ -26,7 +26,10 @@ import com.myeducationproject.vkclient.domain.StatisticType
 fun PostCard(
     modifier: Modifier = Modifier,
     feedPost: FeedPost,
-    onStatisticItemClickListener: (StatisticItem) -> Unit
+    onLikeClickListener: (StatisticItem) -> Unit,
+    onCommentClickListener: (StatisticItem) -> Unit,
+    onShareClickListener: (StatisticItem) -> Unit,
+    onViewsClickListener: (StatisticItem) -> Unit
 ) {
 
     Card(
@@ -53,7 +56,10 @@ fun PostCard(
             Spacer(modifier = Modifier.height(8.dp))
             Statistics(
                 statistics = feedPost.statistics,
-                onItemClickListener = onStatisticItemClickListener
+                onLikeClickListener = onLikeClickListener,
+                onCommentClickListener = onCommentClickListener,
+                onShareClickListener = onShareClickListener,
+                onViewsClickListener = onViewsClickListener
             )
         }
     }
@@ -62,7 +68,10 @@ fun PostCard(
 @Composable
 private fun Statistics(
     statistics: List<StatisticItem>,
-    onItemClickListener: (StatisticItem) -> Unit
+    onLikeClickListener: (StatisticItem) -> Unit,
+    onCommentClickListener: (StatisticItem) -> Unit,
+    onShareClickListener: (StatisticItem) -> Unit,
+    onViewsClickListener: (StatisticItem) -> Unit
 ) {
     Row {
         Row(
@@ -74,7 +83,7 @@ private fun Statistics(
                 iconResId = R.drawable.ic_like,
                 text = likeItem.count.toString(),
                 onItemClickListener = {
-                    onItemClickListener(likeItem)
+                    onLikeClickListener(likeItem)
                 })
 
             val commentItem = statistics.getItemByType(StatisticType.COMMENTS)
@@ -82,7 +91,7 @@ private fun Statistics(
                 iconResId = R.drawable.ic_comment,
                 text = commentItem.count.toString(),
                 onItemClickListener = {
-                    onItemClickListener(commentItem)
+                    onCommentClickListener(commentItem)
                 })
 
             val shareItem = statistics.getItemByType(StatisticType.SHARES)
@@ -90,7 +99,7 @@ private fun Statistics(
                 iconResId = R.drawable.ic_share,
                 text = shareItem.count.toString(),
                 onItemClickListener = {
-                    onItemClickListener(shareItem)
+                    onShareClickListener(shareItem)
                 })
         }
         Row(
@@ -102,7 +111,7 @@ private fun Statistics(
                 iconResId = R.drawable.ic_views_count,
                 text = viewsItem.count.toString(),
                 onItemClickListener = {
-                    onItemClickListener(viewsItem)
+                    onViewsClickListener(viewsItem)
                 })
         }
     }
