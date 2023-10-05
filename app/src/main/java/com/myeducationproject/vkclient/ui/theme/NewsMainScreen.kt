@@ -1,6 +1,11 @@
 package com.myeducationproject.vkclient.ui.theme
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -10,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.myeducationproject.vkclient.MainViewModel
-import com.myeducationproject.vkclient.domain.FeedPost
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun NewsMainScreen(
     viewModel: MainViewModel
 ) {
 
-    val feedPost = viewModel.feedPost.observeAsState(FeedPost())
+    val models = viewModel.models.observeAsState(listOf())
 
     Scaffold(
         bottomBar = {
@@ -48,13 +53,45 @@ fun NewsMainScreen(
             }
         }
     ) {
-        PostCard(
-            modifier = Modifier.padding(8.dp),
-            feedPost = feedPost.value,
-            onLikeClickListener = viewModel::updateCount,
-            onCommentClickListener = viewModel::updateCount,
-            onShareClickListener = viewModel::updateCount,
-            onViewsClickListener = viewModel::updateCount
-        )
+        LazyColumn(
+            modifier = Modifier.padding(it),
+            contentPadding = PaddingValues(
+                top = 16.dp,
+                start = 8.dp,
+                end = 8.dp,
+                bottom = 72.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(models.value, key = { it.id }) { post ->
+                val dismissState = rememberDismissState()
+                if (dismissState.isDismissed(DismissDirection.EndToStart)) {
+                    viewModel.deleteBySwipe(post)
+                }
+
+                SwipeToDismiss(
+                    modifier = Modifier.animateItemPlacement(),
+                    state = dismissState,
+                    directions = setOf(DismissDirection.EndToStart),
+                    background = {}
+                ) {
+                    PostCard(
+                        feedPost = post,
+                        onLikeClickListener = { statisticItem ->
+                            viewModel.updatePostCount(post, statisticItem)
+                        },
+                        onCommentClickListener =  { statisticItem ->
+                            viewModel.updatePostCount(post, statisticItem)
+                        },
+                        onShareClickListener =  { statisticItem ->
+                            viewModel.updatePostCount(post, statisticItem)
+                        },
+                        onViewsClickListener =  { statisticItem ->
+                            viewModel.updatePostCount(post, statisticItem)
+                        }
+                    )
+                }
+            }
+        }
     }
 }
