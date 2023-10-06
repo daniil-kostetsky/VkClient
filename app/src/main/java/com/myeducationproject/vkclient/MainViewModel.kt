@@ -3,7 +3,6 @@ package com.myeducationproject.vkclient
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.myeducationproject.vkclient.domain.FeedPost
 import com.myeducationproject.vkclient.domain.StatisticItem
 
@@ -11,9 +10,11 @@ class MainViewModel : ViewModel() {
 
     private val initialList = mutableListOf<FeedPost>().apply {
         repeat(10) {
-            add(FeedPost(
-                id = it
-            ))
+            add(
+                FeedPost(
+                    id = it
+                )
+            )
         }
     }
 
