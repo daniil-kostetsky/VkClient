@@ -6,10 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.myeducationproject.vkclient.ui.theme.NewsMainScreen
 import com.myeducationproject.vkclient.ui.theme.VkClientTheme
+import com.myeducationproject.vkclient.viewmodels.NewsFeedViewModel
 
 class MainActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             VkClientTheme {
 
-                NewsMainScreen(viewModel)
+                NewsMainScreen()
 
             }
         }
